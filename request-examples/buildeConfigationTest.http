@@ -1,0 +1,75 @@
+### Создание проекта
+POST http://192.168.0.14:8111/app/rest/projects
+Content-Type: application/json
+Accept: application/json
+X-TC-CSRF-Token:331f6419-35a3-4b1f-85d7-076589eb4741
+
+{
+  "parentProject": {
+    "locator": "_Root"
+  },
+  "name": "name",
+  "id": "id",
+  "copyAllAssociatedSettings": true
+}
+
+### Генерация токена
+GET http://admin:admin@192.168.0.14:8111/authenticationTest.html?csrf
+Accept: application/json
+Authorization: Basic admin admin
+
+#### Создание builde configuration
+POST http://admin:admin@192.168.0.14:8111/app/rest/buildTypes
+Content-Type: application/json
+Accept: application/json
+X-TC-CSRF-Token:ad566087-f737-4f18-8134-4f15e4771200
+
+{
+  "id": "id",
+  "name": "Print hello world",
+  "project": {
+    "id": "id"
+  },
+  "steps": {
+    "step": [
+      {
+        "name": "Print hello world",
+        "type": "simpleRunner",
+        "properties": {
+          "property": [
+            {
+              "name": "script.content",
+              "value": "echo 'Hello World!'"
+            },
+            {
+              "name": "teamcity.step.mode",
+              "value": "default"
+            },
+            {
+              "name": "use.custom.script",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+
+#### Run builde
+POST http://admin:admin@192.168.0.14:8111/app/rest/buildQueue
+Content-Type: application/json
+Accept: application/json
+X-TC-CSRF-Token:97c73f32-e015-46af-a475-7502261e8115
+
+{
+  "buildType": {
+    "id": "id"
+  }
+}
+
+#### Check builde status
+GET http://admin:admin@192.168.0.14:8111/app/rest/builds/id:103
+Content-Type: application/json
+Accept: application/json
+X-TC-CSRF-Token:97c73f32-e015-46af-a475-7502261e8115
