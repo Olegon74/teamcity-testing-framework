@@ -9,8 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseModel {
-    private String username;
-    private String password;
+public class Step extends BaseModel {
+    private String id;
+    private String name;
+    @Builder.Default
+    private String type = "simpleRunner";
+
+
 
 }
