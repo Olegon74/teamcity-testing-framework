@@ -6,6 +6,8 @@ import com.example.teamcity.api.requests.checked.CheckedBase;
 import com.example.teamcity.api.spec.Specifications;
 import jdk.jfr.Description;
 import org.testng.annotations.Test;
+
+import static com.example.teamcity.api.generators.TestDataGenerator.generate;
 import static io.qameta.allure.Allure.step;
 
 @Test(groups = {"Regression"})
@@ -13,20 +15,17 @@ public class BuildTypeTest extends BaseApiTest {
     @Description("Пользователь создает сборку")
     @Test(description = "User should be able to create build type", groups = {"Positive", "CRUD"})
     public void userCreatesBuildTypeTest() {
+        var user = generate(User.class);
+
         step("Create user", () ->  {
-            var user = User.builder()
-                    .username("name2")
-                    .password("password2")
-                    .build();
-
             var requester = new CheckedBase<User>(Specifications.superUserAuth(), Endpoint.USERS);
-
             requester.create(user);
         });
         step("Create project by user");
         step("Create buildType for project by user");
         step("Check buildType was created successfully with correct data");
     }
+
     @Description("Создание двух типов сборки с одинковыми id")
     @Test(description = "User should not be able to create two build types with the same id", groups = {"Negative", "CRUD"})
     public void userCreatesTwoBuildTypesWithTheSameIdTest() {
