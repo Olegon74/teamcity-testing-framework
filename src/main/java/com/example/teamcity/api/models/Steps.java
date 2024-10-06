@@ -1,6 +1,6 @@
 package com.example.teamcity.api.models;
 
-import io.qameta.allure.Step;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

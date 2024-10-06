@@ -72,8 +72,44 @@ X-TC-CSRF-Token:a23db9e2-a77e-4690-8e95-fb9a606a9144
 GET http://admin:admin@192.168.0.14:8111/app/rest/builds/id:2
 Content-Type: application/json
 Accept: application/json
-X-TC-CSRF-Token:a23db9e2-a77e-4690-8e95-fb9a606a9144
+X-T-CSRF-Token:a23db9e2-a77e-4690-8e95-fb9a606a9144
 
 ### getRrequest
 GET http://admin:admin@192.168.0.14:8111/app/rest/buildTypes/id:id
 Accept: application/json
+
+### Set authentication settings
+PUT http://admin:admin@192.168.0.14:8111/app/rest/server/authSettings
+Content-Type: application/json
+Accept: application/json
+X-TC-CSRF-Token:114bf213-0636-4c46-b1ef-3349f38c7fda
+
+{
+  "allowGuest": true,
+  "guestUsername": "string",
+  "welcomeText": "string",
+  "collapseLoginForm": true,
+  "perProjectPermissions": true,
+  "emailVerification": true,
+  "modules": {
+    "module": [
+      {
+        "name": "string",
+        "properties": {
+          "property": [
+            {
+              "name": "string",
+              "value": "string",
+              "inherited": true,
+              "type": {
+                "rawValue": "string"
+              }
+            }
+          ],
+          "count": 0,
+          "href": "string"
+        }
+      }
+    ]
+  }
+}

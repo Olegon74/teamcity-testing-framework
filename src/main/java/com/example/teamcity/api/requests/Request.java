@@ -1,6 +1,6 @@
 package com.example.teamcity.api.requests;
 
-import com.example.teamcity.api.requests.enums.Endpoint;
+import com.example.teamcity.api.enums.Endpoint;
 import io.restassured.specification.RequestSpecification;
 
 public class Request {
@@ -9,8 +9,8 @@ public class Request {
      *  спецификация, эндпоинт (relative URL, model)
      */
 
-    private final RequestSpecification spec;
-    private Endpoint endpoint;
+    protected final RequestSpecification spec;
+    protected Endpoint endpoint;
 
     public Request(RequestSpecification spec, Endpoint endpoint) {
         this.spec = spec;
