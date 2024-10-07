@@ -3,7 +3,6 @@ package com.example.teamcity.api;
 import com.example.teamcity.api.enums.Endpoint;
 import com.example.teamcity.api.models.BuildType;
 import com.example.teamcity.api.models.Project;
-import com.example.teamcity.api.models.User;
 import com.example.teamcity.api.requests.CheckedRequests;
 import com.example.teamcity.api.requests.unchecked.UncheckedBase;
 import com.example.teamcity.api.spec.Specifications;
@@ -13,6 +12,8 @@ import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+
+import static com.example.teamcity.api.enums.Endpoint.*;
 import static com.example.teamcity.api.generators.TestDataGenerator.generate;
 import static io.qameta.allure.Allure.step;
 
@@ -22,42 +23,35 @@ public class BuildTypeTest extends BaseApiTest {
     @Test(description = "User should be able to create build type", groups = {"Positive", "CRUD"})
     public void userCreatesBuildTypeTest() {
 
-        superUserCheckRequests.getRequest(Endpoint.USERS).create(testData.getUser()); //с помошью суперюзера, создвем юзера
-        var userCheckRequests = new CheckedRequests(Specifications.authSpec(testData.getUser())); //юзер способен отправлять разные запросы
+        superUserCheckRequests.getRequest(USERS).create(testData.getUser());
+        var userCheckRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
 
+        userCheckRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
 
-        userCheckRequests.<Project>getRequest(Endpoint.PROJECTS).create(testData.getProject()); // создаем project и сохраняем projrctId
+        userCheckRequests.getRequest(BUILD_TYPES).create(testData.getBuildType());
 
+        var createdBuildType = userCheckRequests.<BuildType>getRequest(BUILD_TYPES).read(testData.getBuildType().getId());
 
-        userCheckRequests.getRequest(Endpoint.BUILD_TYPES).create(testData.getBuildType());//берем сгенерированный BuildType, создаем BuildType
-
-
-        var createdBuildType = userCheckRequests.<BuildType>getRequest(Endpoint.BUILD_TYPES).read(testData.getBuildType().getId()); //берем BuildTypeId и читаем по BuildTypeId
-
-        softy.assertEquals(testData.getBuildType().getName(), createdBuildType.getName(), "Build type name is not correct"); //проверяем что все успешно создано
-
+        softy.assertEquals(testData.getBuildType().getName(), createdBuildType.getName(), "Build type name is not correct");
     }
 
     @Description("Создание двух типов сборки с одинаковыми id")
     @Test(description = "User should not be able to create two build types with the same id", groups = {"Negative", "CRUD"})
     public void userCreatesTwoBuildTypesWithTheSameIdTest() {
 
-        superUserCheckRequests.getRequest(Endpoint.USERS).create(testData.getUser()); //с помошью суперюзера, создвем юзера
-        var userCheckRequests = new CheckedRequests(Specifications.authSpec(testData.getUser())); //юзер способен отправлять разные запросы
+        var buildTypeWithSameId = generate(Arrays.asList(testData.getProject()), BuildType.class, testData.getBuildType().getId());
 
+        superUserCheckRequests.getRequest(USERS).create(testData.getUser());
 
-        userCheckRequests.<Project>getRequest(Endpoint.PROJECTS).create(testData.getProject());
+        var userCheckRequests = new CheckedRequests(Specifications.authSpec(testData.getUser()));
 
+        userCheckRequests.<Project>getRequest(PROJECTS).create(testData.getProject());
 
-        var buildeTypeWithSameId = generate(Arrays.asList(testData.getProject()), BuildType.class, testData.getBuildType().getId());
-
-
-        userCheckRequests.getRequest(Endpoint.BUILD_TYPES).create(testData.getBuildType());//берем сгенерированный BuildType, создаем BuildType
-        new UncheckedBase(Specifications.authSpec(testData.getUser()), Endpoint.BUILD_TYPES)
-                .create(buildeTypeWithSameId)
+        userCheckRequests.getRequest(BUILD_TYPES).create(testData.getBuildType());
+        new UncheckedBase(Specifications.authSpec(testData.getUser()), BUILD_TYPES)
+                .create(buildTypeWithSameId)
                 .then().assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .body(Matchers.containsString("The build configuration / template ID \"%s\" is already used by another configuration or template".formatted(testData.getBuildType().getId())));
-
 
     }
     @Description("Администратор проекта, создает типы сборки для своего проекта")
