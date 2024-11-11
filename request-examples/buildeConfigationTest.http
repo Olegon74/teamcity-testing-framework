@@ -82,27 +82,27 @@ Accept: application/json
 PUT http://admin:admin@192.168.0.14:8111/app/rest/server/authSettings
 Content-Type: application/json
 Accept: application/json
-X-TC-CSRF-Token:114bf213-0636-4c46-b1ef-3349f38c7fda
+X-TC-CSRF-Token:e877b82b-e989-4a77-b0f8-8c137a47e866
 
 {
   "allowGuest": true,
-  "guestUsername": "string",
-  "welcomeText": "string",
+  "guestUsername": "guest",
+  "welcomeText": "",
   "collapseLoginForm": true,
   "perProjectPermissions": true,
-  "emailVerification": true,
+  "emailVerification": false,
   "modules": {
     "module": [
       {
-        "name": "string",
+        "name": "Default",
         "properties": {
           "property": [
             {
-              "name": "string",
+              "name": "String",
               "value": "string",
               "inherited": true,
               "type": {
-                "rawValue": "string"
+                "rawValue": "String"
               }
             }
           ],
@@ -113,3 +113,22 @@ X-TC-CSRF-Token:114bf213-0636-4c46-b1ef-3349f38c7fda
     ]
   }
 }
+
+###
+GET http://admin:admin@192.168.0.14:8111/app/rest/server/authSettings
+Content-Type: application/json
+Accept: application/json
+X-T-CSRF-Token: fb6f07f2-c76e-4a45-a97c-99e42d7b2a72
+
+###
+GET http://admin:admin@192.168.0.14:8111/app/rest/roles
+Content-Type: application/json
+Accept: application/json
+X-T-CSRF-Token: fb6f07f2-c76e-4a45-a97c-99e42d7b2a72
+
+###
+GET http://admin:admin@192.168.0.14:8111/app/rest/roles/id:PROJECT_ADMIN
+ontent-Type: application/json
+Accept: application/json
+X-T-CSRF-Token: fb6f07f2-c76e-4a45-a97c-99e42d7b2a72
+
