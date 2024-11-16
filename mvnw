@@ -32,6 +32,7 @@
 #     e.g. to debug Maven itself, use
 #       set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
 #   MAVEN_SKIP_RC - flag to disable loading of mavenrc files
+#
 # ----------------------------------------------------------------------------
 
 if [ -z "$MAVEN_SKIP_RC" ] ; then
@@ -62,6 +63,7 @@ case "`uname`" in
     # See https://developer.apple.com/library/mac/qa/qa1170/_index.html
     if [ -z "$JAVA_HOME" ]; then
       if [ -x "/usr/libexec/java_home" ]; then
+        # shellcheck disable=SC2155
         export JAVA_HOME="`/usr/libexec/java_home`"
       else
         export JAVA_HOME="/Library/Java/Home"
@@ -98,6 +100,7 @@ if [ -z "$M2_HOME" ] ; then
   # make it fully qualified
   M2_HOME=`cd "$M2_HOME" && pwd`
 
+  # shellcheck disable=SC2164
   cd "$saveddir"
   # echo Using m2 at $M2_HOME
 fi
@@ -184,6 +187,7 @@ find_maven_basedir() {
     fi
     # workaround for JBEAP-8937 (on Solaris 10/Sparc)
     if [ -d "${wdir}" ]; then
+      # shellcheck disable=SC2006
       wdir=`cd "$wdir/.."; pwd`
     fi
     # end of workaround
