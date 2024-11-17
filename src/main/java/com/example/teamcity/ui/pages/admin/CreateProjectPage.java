@@ -2,7 +2,6 @@ package com.example.teamcity.ui.pages.admin;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.example.teamcity.api.models.BaseModel;
 
 import static com.codeborne.selenide.Selenide.$;
 

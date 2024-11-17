@@ -1,4 +1,4 @@
-package com.example.teamcity.api.ui;
+package com.example.teamcity.ui;
 
 import com.codeborne.selenide.Condition;
 import com.example.teamcity.api.enums.Endpoint;

@@ -1,4 +1,4 @@
-package com.example.teamcity.api.api;
+package com.example.teamcity.api;
 
 import com.example.teamcity.api.models.BuildType;
 import com.example.teamcity.api.models.Project;
