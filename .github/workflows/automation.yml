@@ -19,6 +19,7 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
+
       - name: Set executable permissions for Maven Wrapper
         run: chmod +x ./mvnw
 
@@ -48,9 +49,9 @@ jobs:
       - name: Run Swagger Coverage
         continue-on-error: true
         if: ${{ inputs.package == 'api' }}
-        run: .swagger-coverage-commandline/bin/swagger-coverage-commandline -s http://$HOST:8111/app/rest/swagger.json -i target/-d
+        run: .swagger-coverage-commandline/bin/swagger-coverage-commandline -s http://$HOST:8111/app/rest/swagger.json -i target/swagger-coverage-output
 
-        # Сохраняем Swagger Report в артефакты GitHub Actions
+            # Сохраняем Swagger Report в артефакты GitHub Actions
       - name: Save Swagger Coverage
         uses: actions/upload-artifact@v4
         if: ${{ inputs.package == 'api' }}
